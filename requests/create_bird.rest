@@ -7,5 +7,5 @@ Content-Type: application/json
         "kunta": "Joensuu",
         "paikka": "Kellotorni",
         "havainnoija": "SamuliV",
-        "lisatiedot": ""
+        "lisatiedot": "Punainen tulkku"
 }
