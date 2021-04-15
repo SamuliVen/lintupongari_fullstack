@@ -1,0 +1,70 @@
+{
+    "havainto": [
+        {
+            "id": "1",
+            "laji": "Korppi",
+            "maara": "1",
+            "pvm": "14.4.2021",
+            "kunta": "Joensuu",
+            "paikka": "Ystävyyspuisto",
+            "havainnoija": "SamuliV",
+            "lisätiedot": ""
+        },
+        {
+            "id": "2",
+            "laji": "Sinitiainen",
+            "maara": "5",
+            "pvm": "14.4.2021",
+            "kunta": "Joensuu",
+            "paikka": "Aavaranta",
+            "havainnoija": "SamuliV",
+            "lisätiedot": ""
+        },
+        {
+            "id": "3",
+            "laji": "Käpytikka",
+            "maara": "1",
+            "pvm": "14.4.2021",
+            "kunta": "Joensuu",
+            "paikka": "Kirkkopuisto",
+            "havainnoija": "SamuliV",
+            "lisatiedot": ""
+        }
+    ],
+    "lintu": [
+        {
+            "laji": "Korppi",
+            "tieteellinenNimi": "Corvus corax",
+            "kuvaWikipediastaAPI": "https://upload.wikimedia.org/wikipedia/commons/b/be/Corvus_corax_%28FWS%29.jpg",
+            "lahko": "Varpuslinnut Passeriformes",
+            "heimo": "Varikset Corvidae",
+            "suku": "Varikset Corvus",
+            "elinvoimaisuus": "Elin-voimainen"
+        },
+        {
+            "laji": "Sinitiainen",
+            "tieteellinenNimi": "Cyanistes caeruleus",
+            "kuvaWikipediastaAPI": "https://upload.wikimedia.org/wikipedia/commons/2/29/ParusCaeruleus.jpg",
+            "lahko": "Varpuslinnut Passeriformes",
+            "heimo": "Tiaiset Paridae",
+            "suku": "Sinitiaiset Cyanistes",
+            "elinvoimaisuus": "Elin-voimainen"
+        },
+        {
+            "laji": "Käpytikka",
+            "tieteellinenNimi": "Dendrocopos majo",
+            "kuvaWikipediastaAPI": "https://upload.wikimedia.org/wikipedia/commons/7/79/DendrocoposMajor.jpg",
+            "lahko": "Tikkalinnut Piciformes",
+            "heimo": "Tikat Picidae",
+            "suku": "Käpytikat Dendrocopos",
+            "elinvoimaisuus": "Elin-voimainen"
+        }
+    ],
+    "user": [
+        {
+            "id": "",
+            "username": "",
+            "password": ""
+        }
+    ]
+}

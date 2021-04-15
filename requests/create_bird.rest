@@ -1,0 +1,11 @@
+POST http://localhost:3001/api/lintudb
+Content-Type: application/json
+
+{
+        "laji": "Punatulkku",
+        "maara": "3",
+        "kunta": "Joensuu",
+        "paikka": "Kellotorni",
+        "havainnoija": "SamuliV",
+        "lisatiedot": ""
+}
