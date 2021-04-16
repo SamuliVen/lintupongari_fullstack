@@ -1,4 +1,4 @@
-POST http://localhost:3001/api/lintudb
+POST http://localhost:3001/api/lintudb/havainto
 Content-Type: application/json
 
 {

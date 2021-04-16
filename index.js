@@ -89,35 +89,59 @@ let lintuhavaintodb = [
     }
 ]
 
-app.get('/', (req, res) => {
-    res.send('<h1>Hello World!</h1>')
-})
+let havaintoTaulu = lintuhavaintodb.flatMap(h => h.havainto)
+
+let lintuTaulu = lintuhavaintodb.flatMap(l => l.lintu)
+
+let userTaulu = lintuhavaintodb.flatMap(u => u.user)
+
 
 app.get('/api/lintudb', (req, res) => {
     res.json(lintuhavaintodb)
 })
 
-app.get('/api/lintudb/:id', (request, response) => {
-    const id = Number(request.params.id)
-    const lintu = lintuhavaintodb.find(lintu => lintu.havainto[id - 1].id === id)
+app.get('/api/lintudb/havainto', (req, res) => {
+    res.json(havaintoTaulu)
+})
 
-    if (lintu.havainto[id - 1]) {
-        response.json(lintu.havainto[id - 1])
+app.get('/api/lintudb/lintu', (req, res) => {
+    res.json(lintuTaulu)
+})
+
+app.get('/api/lintudb/user', (req, res) => {
+    res.json(userTaulu)
+})
+
+app.get('/api/lintudb/havainto/:id', (request, response) => {
+    const id = Number(request.params.id)
+    const havainto = lintuhavaintodb.find(lintu => lintu.havainto[id - 1].id === id)
+
+    if (havainto.havainto[id - 1]) {
+        response.json(havainto.havainto[id - 1])
     } else {
         response.status(404).end()
     }
 })
 
-let havainnot = lintuhavaintodb.flatMap(h => h.havainto)
+app.get('/api/lintudb/user/:id', (request, response) => {
+    const id = Number(request.params.id)
+    const user = lintuhavaintodb.find(user => user.user[id - 1].id === id)
+
+    if (user.user[id - 1]) {
+        response.json(user.user[id - 1])
+    } else {
+        response.status(404).end()
+    }
+})
 
 const generateId = () => {
-    const maxId = havainnot.length > 0
-        ? Math.max(...havainnot.map(n => n.id))
+    const maxId = havaintoTaulu.length > 0
+        ? Math.max(...havaintoTaulu.map(n => n.id))
         : 0
     return maxId + 1
 }
 
-app.post('/api/lintudb', (request, response) => {
+app.post('/api/lintudb/havainto', (request, response) => {
     const body = request.body
 
     if (!body.laji) {
@@ -137,15 +161,16 @@ app.post('/api/lintudb', (request, response) => {
         lisatiedot: body.lisatiedot
     }
 
-    havainnot = havainnot.concat(uusiHavainto)
-    lintuhavaintodb.map(h => h.havainto = havainnot)
+    havaintoTaulu = havaintoTaulu.concat(uusiHavainto)
+    lintuhavaintodb.map(h => h.havainto = havaintoTaulu)
 
     response.json(uusiHavainto)
 })
 
-app.delete('/api/lintudb/:id', (request, response) => {
+app.delete('/api/lintudb/havainto/:id', (request, response) => {
     const id = Number(request.params.id)
-    lintuhavaintodb = lintuhavaintodb.filter(lintu => lintu.havainto[id - 1] !== id)
+    havaintoTaulu = havaintoTaulu.filter(havainto => havainto.id !== id)
+    lintuhavaintodb.map(h => h.havainto = havaintoTaulu)
 
     response.status(204).end()
 })
