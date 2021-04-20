@@ -18,7 +18,7 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFind
     kunta: String,
     paikka: String,
     havainnoija: String,
-    lisätiedot: String,
+    lisatiedot: String,
   });
 
   havaintoSchema.set('toJSON', {
