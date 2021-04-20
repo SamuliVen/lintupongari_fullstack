@@ -5,7 +5,10 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "deploy": "git push heroku master",
+    "deploy": "git push heroku mmaster",
+    "build:ui": "rm -rf build && cd ../lintupongari/ && npm run build --prod && cp -r build ../lintupongari_fullstack",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy",    
+    "logs:prod": "heroku logs --tail",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Samuli Vento",
