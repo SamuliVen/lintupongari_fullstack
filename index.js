@@ -1,183 +1,112 @@
-const express = require('express')
-const app = express()
-const cors = require('cors')
+require("dotenv").config();
+const express = require("express");
+const app = express();
+const cors = require("cors");
 
-app.use(express.static('build'))
-app.use(cors())
-app.use(express.json())
+const Havainto = require("./models/havainto");
 
-let lintuhavaintodb = [
-    {
-        "havainto": [
-            {
-                "id": 1,
-                "laji": "Korppi",
-                "maara": "1",
-                "pvm": "14.4.2021",
-                "kunta": "Joensuu",
-                "paikka": "Ystävyyspuisto",
-                "havainnoija": "SamuliV",
-                "lisatiedot": ""
-            },
-            {
-                "id": 2,
-                "laji": "Sinitiainen",
-                "maara": "5",
-                "pvm": "14.4.2021",
-                "kunta": "Joensuu",
-                "paikka": "Aavaranta",
-                "havainnoija": "SamuliV",
-                "lisatiedot": ""
-            },
-            {
-                "id": 3,
-                "laji": "Käpytikka",
-                "maara": "1",
-                "pvm": "14.4.2021",
-                "kunta": "Joensuu",
-                "paikka": "Kirkkopuisto",
-                "havainnoija": "SamuliV",
-                "lisatiedot": ""
-            },
-            {
-                "id": 4,
-                "laji": "Pulu",
-                "maara": "1",
-                "pvm": "15.4.2021",
-                "kunta": "Joensuu",
-                "paikka": "Toripuisto",
-                "havainnoija": "SamuliV",
-                "lisatiedot": ""
-            }
+app.use(express.static("build"));
+app.use(cors());
+app.use(express.json());
 
-        ],
-        "lintu": [
-            {
-                "laji": "Korppi",
-                "tieteellinenNimi": "Corvus corax",
-                "kuvaWikipediastaAPI": "https://upload.wikimedia.org/wikipedia/commons/b/be/Corvus_corax_%28FWS%29.jpg",
-                "lahko": "Varpuslinnut Passeriformes",
-                "heimo": "Varikset Corvidae",
-                "suku": "Varikset Corvus",
-                "elinvoimaisuus": "Elin-voimainen"
-            },
-            {
-                "laji": "Sinitiainen",
-                "tieteellinenNimi": "Cyanistes caeruleus",
-                "kuvaWikipediastaAPI": "https://upload.wikimedia.org/wikipedia/commons/2/29/ParusCaeruleus.jpg",
-                "lahko": "Varpuslinnut Passeriformes",
-                "heimo": "Tiaiset Paridae",
-                "suku": "Sinitiaiset Cyanistes",
-                "elinvoimaisuus": "Elin-voimainen"
-            },
-            {
-                "laji": "Käpytikka",
-                "tieteellinenNimi": "Dendrocopos majo",
-                "kuvaWikipediastaAPI": "https://upload.wikimedia.org/wikipedia/commons/7/79/DendrocoposMajor.jpg",
-                "lahko": "Tikkalinnut Piciformes",
-                "heimo": "Tikat Picidae",
-                "suku": "Käpytikat Dendrocopos",
-                "elinvoimaisuus": "Elin-voimainen"
-            }
-        ],
-        "user": [
-            {
-                "id": "",
-                "username": "",
-                "password": ""
-            }
-        ]
-    }
-]
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message);
 
-let havaintoTaulu = lintuhavaintodb.flatMap(h => h.havainto)
+  if (error.name === "CastError") {
+    return response.status(400).send({ error: "malformatted id" });
+  }
 
-let lintuTaulu = lintuhavaintodb.flatMap(l => l.lintu)
+  next(error);
+};
 
-let userTaulu = lintuhavaintodb.flatMap(u => u.user)
+const requestLogger = (request, response, next) => {
+  console.log("Method:", request.method);
+  console.log("Path:  ", request.path);
+  console.log("Body:  ", request.body);
+  console.log("---");
+  next();
+};
 
+app.use(requestLogger);
 
-app.get('/api/lintudb', (req, res) => {
-    res.json(lintuhavaintodb)
-})
+// app.get("/api/lintudb", (req, res) => {
+//   res.json(lintuhavaintodb);
+// });
 
-app.get('/api/lintudb/havainto', (req, res) => {
-    res.json(havaintoTaulu)
-})
+app.get("/api/lintudb/havainto", (req, res) => {
+  Havainto.find({}).then((havainnot) => {
+    res.json(havainnot);
+  });
+});
 
-app.get('/api/lintudb/lintu', (req, res) => {
-    res.json(lintuTaulu)
-})
+// app.get("/api/lintudb/lintu", (req, res) => {
+//   res.json(lintuTaulu);
+// });
 
-app.get('/api/lintudb/user', (req, res) => {
-    res.json(userTaulu)
-})
+// app.get("/api/lintudb/user", (req, res) => {
+//   res.json(userTaulu);
+// });
 
-app.get('/api/lintudb/havainto/:id', (request, response) => {
-    const id = Number(request.params.id)
-    const havainto = lintuhavaintodb.find(lintu => lintu.havainto[id - 1].id === id)
+app.get("/api/lintudb/havainto/:id", (request, response, next) => {
+  Havainto.findById(request.params.id)
+    .then((havainto) => {
+      if (havainto) {
+        response.json(havainto);
+      } else {
+        response.status(404).end();
+      }
+    })
+    .catch((error) => {
+      console.log("Error found!");
+      next(error);
+    });
+});
 
-    if (havainto.havainto[id - 1]) {
-        response.json(havainto.havainto[id - 1])
-    } else {
-        response.status(404).end()
-    }
-})
+app.post("/api/lintudb/havainto", (request, response) => {
+  const body = request.body;
 
-app.get('/api/lintudb/user/:id', (request, response) => {
-    const id = Number(request.params.id)
-    const user = lintuhavaintodb.find(user => user.user[id - 1].id === id)
+  if (body.laji === undefined) {
+    return response.status(400).json({
+      error: "content missing",
+    });
+  }
 
-    if (user.user[id - 1]) {
-        response.json(user.user[id - 1])
-    } else {
-        response.status(404).end()
-    }
-})
+  const uusiHavainto = new Havainto({
+    laji: body.laji,
+    maara: body.maara,
+    pvm: new Date(),
+    kunta: body.kunta,
+    paikka: body.paikka,
+    havainnoija: body.havainnoija,
+    lisatiedot: body.lisatiedot,
+  });
 
-const generateId = () => {
-    const maxId = havaintoTaulu.length > 0
-        ? Math.max(...havaintoTaulu.map(n => n.id))
-        : 0
-    return maxId + 1
-}
+  uusiHavainto.save().then(savedHavainto => {
+    response.json(savedHavainto);
+  });
 
-app.post('/api/lintudb/havainto', (request, response) => {
-    const body = request.body
+  //   havaintoTaulu = havaintoTaulu.concat(uusiHavainto);
+  //   lintuhavaintodb.map((h) => (h.havainto = havaintoTaulu))
+  //   response.json(uusiHavainto);
+});
 
-    if (!body.laji) {
-        return response.status(400).json({
-            error: 'content missing'
-        })
-    }
+app.delete("/api/lintudb/havainto/:id", (request, response, next) => {
+  Havainto.findByIdAndDelete(request.params.id)
+    .then((result) => {
+      response.status(204).end();
+    })
+    .catch((error) => next(error));
+});
 
-    const uusiHavainto = {
-        id: generateId(),
-        laji: body.laji,
-        maara: body.maara,
-        pvm: new Date(),
-        kunta: body.kunta,
-        paikka: body.paikka,
-        havainnoija: body.havainnoija,
-        lisatiedot: body.lisatiedot
-    }
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: "unknown endpoint" });
+};
 
-    havaintoTaulu = havaintoTaulu.concat(uusiHavainto)
-    lintuhavaintodb.map(h => h.havainto = havaintoTaulu)
+app.use(unknownEndpoint);
 
-    response.json(uusiHavainto)
-})
+app.use(errorHandler);
 
-app.delete('/api/lintudb/havainto/:id', (request, response) => {
-    const id = Number(request.params.id)
-    havaintoTaulu = havaintoTaulu.filter(havainto => havainto.id !== id)
-    lintuhavaintodb.map(h => h.havainto = havaintoTaulu)
-
-    response.status(204).end()
-})
-
-
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
-})
+  console.log(`Server running on port ${PORT}`);
+});
