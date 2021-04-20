@@ -26,6 +26,18 @@ const havaintoSchema = new mongoose.Schema({
   lisätiedot: String,
 });
 
+const lintuSchema = new mongoose.Schema({
+  laji: String,
+  tieteellinenNimi: String,
+  kuvaWikipediastaAPI: String,
+  lahko: String,
+  heimo: String,
+  suku: String,
+  elinvoimaisuus: String,
+});
+
+const Lintu = mongoose.model("Lintu", lintuSchema);
+
 const Havainto = mongoose.model("Havainto", havaintoSchema);
 
 const havainto = new Havainto({
@@ -38,13 +50,26 @@ const havainto = new Havainto({
   lisätiedot: "mongoose testi",
 });
 
-havainto.save().then((response) => {
-  mongoose.connection.close();
+const lintu = new Lintu({
+  laji: "Korppi",
+  tieteellinenNimi: "Corvus corax",
+  kuvaWikipediastaAPI:
+    "https://upload.wikimedia.org/wikipedia/commons/b/be/Corvus_corax_%28FWS%29.jpg",
+  lahko: "Varpuslinnut Passeriformes",
+  heimo: "Varikset Corvidae",
+  suku: "Varikset Corvus",
+  elinvoimaisuus: "Elin-voimainen",
 });
 
-// Havainto.find({}).then(result => {
-//     result.forEach(havainto => {
-//         console.log(havainto)
-//     })
-//     mongoose.connection.close()
-// })
+Havainto.find({}).then(result => {
+    result.forEach(havainto => {
+        console.log(havainto)
+    })
+})
+
+Lintu.find({}).then(result => {
+  result.forEach(lintu => {
+    console.log(lintu)
+  })
+  mongoose.connection.close()
+})

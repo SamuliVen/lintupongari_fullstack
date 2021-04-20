@@ -4,6 +4,7 @@ const app = express();
 const cors = require("cors");
 
 const Havainto = require("./models/havainto");
+const Lintu = require("./models/lintu");
 
 app.use(express.static("build"));
 app.use(cors());
@@ -29,23 +30,17 @@ const requestLogger = (request, response, next) => {
 
 app.use(requestLogger);
 
-// app.get("/api/lintudb", (req, res) => {
-//   res.json(lintuhavaintodb);
-// });
-
 app.get("/api/lintudb/havainto", (req, res) => {
   Havainto.find({}).then((havainnot) => {
     res.json(havainnot);
   });
 });
 
-// app.get("/api/lintudb/lintu", (req, res) => {
-//   res.json(lintuTaulu);
-// });
-
-// app.get("/api/lintudb/user", (req, res) => {
-//   res.json(userTaulu);
-// });
+app.get("/api/lintudb/lintu", (req, res) => {
+  Lintu.find({}).then((linnut) => {
+    res.json(linnut);
+  });
+});
 
 app.get("/api/lintudb/havainto/:id", (request, response, next) => {
   Havainto.findById(request.params.id)
@@ -81,13 +76,9 @@ app.post("/api/lintudb/havainto", (request, response) => {
     lisatiedot: body.lisatiedot,
   });
 
-  uusiHavainto.save().then(savedHavainto => {
+  uusiHavainto.save().then((savedHavainto) => {
     response.json(savedHavainto);
   });
-
-  //   havaintoTaulu = havaintoTaulu.concat(uusiHavainto);
-  //   lintuhavaintodb.map((h) => (h.havainto = havaintoTaulu))
-  //   response.json(uusiHavainto);
 });
 
 app.delete("/api/lintudb/havainto/:id", (request, response, next) => {
