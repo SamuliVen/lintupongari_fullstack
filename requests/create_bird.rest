@@ -1,11 +1,11 @@
-POST http://localhost:3001/api/lintudb/havainto
+POST http://localhost:3001/api/login
 Content-Type: application/json
 
 {
-        "laji": "Punatulkku",
-        "maara": "3",
+        "laji": "Merikotka",
+        "maara": "2",
         "kunta": "Joensuu",
         "paikka": "Kellotorni",
-        "havainnoija": "SamuliV",
-        "lisatiedot": "Punainen tulkku"
+        "userId": "6081370ecbc9bcc926e78680",
+        "lisatiedot": "Mitä se täällä tekee?"
 }

@@ -1,33 +1,40 @@
+const jwt = require("jsonwebtoken");
 const havaintoRouter = require("express").Router();
 const Havainto = require("../models/havainto");
-const Lintu = require("../models/lintu")
+const Lintu = require("../models/lintu");
+const User = require("../models/user");
 
-havaintoRouter.get("/havainto", (request, response) => {
-  Havainto.find({}).then((havainnot) => {
-    response.json(havainnot.map((havainto) => havainto.toJSON()));
+havaintoRouter.get("/havainto", async (request, response) => {
+  const havainnot = await Havainto.find({}).populate("user", {
+    username: 1,
+    name: 1,
   });
+
+  response.json(havainnot.map((havainto) => havainto.toJSON()));
 });
 
-havaintoRouter.get("/lintu" ,(request, response) => {
+const getTokenFrom = (request) => {
+  const authorization = request.get("authorization");
+  if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
+    return authorization.substring(7);
+  }
+  return null;
+};
+
+havaintoRouter.get("/lintu", (request, response) => {
   Lintu.find({}).then((linnut) => {
     response.json(linnut.map((lintu) => lintu.toJSON()));
   });
 });
 
-havaintoRouter.get("/havainto/:id", (request, response, next) => {
-  Havainto.findById(request.params.id)
-    .then((havainto) => {
-      if (havainto) {
-        response.json(havainto.toJSON());
-      } else {
-        response.status(404).end();
-      }
-    })
-    .catch((error) => next(error));
-});
-
-havaintoRouter.post("/havainto", (request, response, next) => {
+havaintoRouter.post("/havainto", async (request, response, next) => {
   const body = request.body;
+  const token = getTokenFrom(request);
+  const decodedToken = jwt.verify(token, process.env.SECRET);
+  if (!token || !decodedToken.id) {
+    return response.status(401).json({ error: "token missing or invalid" });
+  }
+  const user = await User.findById(body.userId);
 
   const uusiHavainto = new Havainto({
     laji: body.laji,
@@ -35,24 +42,29 @@ havaintoRouter.post("/havainto", (request, response, next) => {
     pvm: new Date(),
     kunta: body.kunta,
     paikka: body.paikka,
-    havainnoija: body.havainnoija,
     lisatiedot: body.lisatiedot,
+    user: user._id,
   });
 
-  uusiHavainto
-    .save()
-    .then((savedHavainto) => {
-      response.json(savedHavainto);
-    })
-    .catch((error) => next(error));
+  const savedHavainto = await uusiHavainto.save();
+  user.havainnot = user.havainnot.concat(savedHavainto._id);
+  await user.save();
+
+  response.json(savedHavainto.toJSON());
 });
 
-havaintoRouter.delete("/havainto/:id", (request, response, next) => {
-  Havainto.findByIdAndRemove(request.params.id)
-    .then(() => {
-      response.status(204).end();
-    })
-    .catch((error) => next(error));
+havaintoRouter.get("/havainto/:id", async (request, response, next) => {
+  const havainto = await Havainto.findById(request.params.id);
+  if (havainto) {
+    response.json(havainto.toJSON());
+  } else {
+    response.status(404).end();
+  }
+});
+
+havaintoRouter.delete("/havainto/:id", async (request, response, next) => {
+  await Havainto.findByIdAndRemove(request.params.id);
+  response.status(204).end();
 });
 
 havaintoRouter.put("/havainto/:id", (request, response, next) => {
@@ -62,7 +74,6 @@ havaintoRouter.put("/havainto/:id", (request, response, next) => {
     laji: body.laji,
     maara: body.maara,
     paikka: body.paikka,
-    havainnoija: body.havainnoija,
     lisatiedot: body.lisatiedot,
   };
 

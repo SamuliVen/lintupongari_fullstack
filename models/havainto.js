@@ -6,8 +6,11 @@ const mongoose = require('mongoose')
     pvm: Date,
     kunta: String,
     paikka: String,
-    havainnoija: String,
     lisatiedot: String,
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }
   });
 
   havaintoSchema.set('toJSON', {

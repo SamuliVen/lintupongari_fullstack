@@ -1,0 +1,8 @@
+POST http://localhost:3001/api/lintudb/user
+Content-Type: application/json
+
+{
+    "username": "PatientOne",
+    "name":"ONE",
+    "passwordHash":"0ne" 
+}
