@@ -82,12 +82,30 @@ app.post("/api/lintudb/havainto", (request, response) => {
 });
 
 app.delete("/api/lintudb/havainto/:id", (request, response, next) => {
-  Havainto.findByIdAndDelete(request.params.id)
+  Havainto.findByIdAndRemove(request.params.id)
     .then((result) => {
       response.status(204).end();
     })
     .catch((error) => next(error));
 });
+
+// app.put("api/lintudb/havainto/:id", (request, response, next) => {
+//   const body = request.body;
+
+//   const havainto = {
+//     laji: body.laji,
+//     maara: body.maara,
+//     paikka: body.paikka,
+//     havainnoija: body.havainnoija,
+//     lisatiedot: body.lisatiedot,
+//   };
+
+//   Havainto.findByIdAndUpdate(request.params.id, havainto, { new: true })
+//     .then((updatedHavainto) => {
+//       response.json(updatedHavainto);
+//     })
+//     .catch((error) => next(error));
+// });
 
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: "unknown endpoint" });
