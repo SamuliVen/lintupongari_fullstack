@@ -73,6 +73,7 @@ havaintoRouter.put("/havainto/:id", (request, response, next) => {
   const havainto = {
     laji: body.laji,
     maara: body.maara,
+    kunta: body.kunta,
     paikka: body.paikka,
     lisatiedot: body.lisatiedot,
   };

@@ -1,11 +1,12 @@
-POST http://localhost:3001/api/login
+POST http://localhost:3001/api/lintudb/havainto
 Content-Type: application/json
+Authentication: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYwODI4MDdlZjlhNWM5MmYxODk2MTZjMCIsImlhdCI6MTYxOTE2OTgwNn0.3mF3zkb_8UYjkn6xMd7WDt0OMYqBrEtASl25uMSpdYU
 
 {
         "laji": "Merikotka",
         "maara": "2",
         "kunta": "Joensuu",
         "paikka": "Kellotorni",
-        "userId": "6081370ecbc9bcc926e78680",
+        "userId": "6082807ef9a5c92f189616c0",
         "lisatiedot": "Mitä se täällä tekee?"
 }
