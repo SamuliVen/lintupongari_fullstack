@@ -34,7 +34,7 @@ havaintoRouter.post("/havainto", async (request, response, next) => {
   if (!token || !decodedToken.id) {
     return response.status(401).json({ error: "token missing or invalid" });
   }
-  const user = await User.findById(body.userId);
+  const user = await User.findById(decodedToken.id);
 
   const uusiHavainto = new Havainto({
     laji: body.laji,
