@@ -53,6 +53,24 @@ havaintoRouter.post("/havainto", async (request, response, next) => {
   response.json(savedHavainto.toJSON());
 });
 
+havaintoRouter.post("/lintu", async (request, response, next) => {
+  const body = request.body;
+
+  const uusiLintu = new Lintu({
+    laji: body.laji,
+    tieteellinenNimi: body.tieteellinenNimi,
+    kuvaWikipediastaAPI: body.kuvaWikipediastaAPI,
+    lahko: body.lahko,
+    heimo: body.heimo,
+    suku: body.suku,
+    elinvoimaisuus: body.elinvoimaisuus
+  });
+
+  const savedLintu = await uusiLintu.save();
+
+  response.json(savedLintu.toJSON());
+});
+
 havaintoRouter.get("/havainto/:id", async (request, response, next) => {
   const havainto = await Havainto.findById(request.params.id);
   if (havainto) {
