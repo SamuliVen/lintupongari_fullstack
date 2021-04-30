@@ -4,7 +4,7 @@ const wikisearch = (haku, callback) => {
   const url =
     "https://fi.wikipedia.org/w/api.php?action=query&titles=" +
     haku +
-    "&format=json&formatversion=2&prop=extracts|pageimages&exintro&explaintext&exsentences=4";
+    "&format=json&formatversion=2&prop=extracts|pageimages&exintro&explaintext&exsentences=4&piprop=original";
   request({ uri: url, json: true }, (error, response, body) => {
     if (error) {
       callback("ei yhteyttä darkboxiin", undefined);
