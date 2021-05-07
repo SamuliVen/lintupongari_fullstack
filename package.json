@@ -2,6 +2,9 @@
   "name": "lintupongari_fullstack",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": "v14.16.1"
+  },
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
@@ -17,12 +20,13 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
+    "dotenv": "^8.6.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.12.5",
-    "mongoose-unique-validator": "^2.0.3"
+    "mongoose": "^5.12.7",
+    "mongoose-unique-validator": "^2.0.3",
+    "serve": "^11.3.2"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
