@@ -9,7 +9,7 @@ const requestLogger = (request, response, next) => {
 };
 
 const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: "unknown endpoint" });
+  response.status(404).sendFile('index.html', { root: 'build/'});
 };
 
 const errorHandler = (error, request, response, next) => {
