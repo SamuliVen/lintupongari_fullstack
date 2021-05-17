@@ -14,8 +14,9 @@ Runs the app in the development mode.
 Open http://localhost:3001 to view it in the browser.
 
 <h3>Elements to develop:</h3>
-1. Error handler for wrong kind of species input.
-- At the moment the app only accepts Finnish birds that can be found in wikipedia.
-- "Species not found, add sighting anyway?".
-2. Rename ALL of the functions and variables to english.
-3. Padding between birds and login box.
+
+1. Error handler for wrong kind of species input.<br/>
+- At the moment the app only accepts Finnish birds that can be found in wikipedia.<br/>
+- "Species not found, add sighting anyway?".<br/>
+2. Rename ALL of the functions and variables to english.<br/>
+3. Padding between birds and login box.<br/>
