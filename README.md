@@ -2,7 +2,7 @@ Lintupongari app
 
 A node app with react frontend build. Frontend can be found in https://github.com/SamuliVen/lintupongari .
 Works with a database in MongoDB Atlas. Uses wiki API to get taxonomy data from birds saved as a sighting. 
-Only works in Finnish and unfortunately doesn't work with special characters such as Ö and Ä at the moment.
+Only works in Finnish.
 
 The app looks best when using a regular computer screen. For the moment, there is some overlapping when using
 the app with mobile devices or other small screens. There is also known issue when trying to refresh a certain page
