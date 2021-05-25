@@ -21,3 +21,6 @@ Open http://localhost:3001 to view it in the browser.
 2. Rename ALL of the functions and variables to english.<br/>
 3. Padding between birds and login box.<br/>
 4. Text fields overflow on mobile.
+5. UI-Framework
+6. Language changes?
+7. Paging-component in case of e.g. 1000 sightings
