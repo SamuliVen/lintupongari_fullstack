@@ -19,7 +19,6 @@ Open http://localhost:3001 to view it in the browser.
 - At the moment the app only accepts Finnish birds that can be found in wikipedia.<br/>
 - "Species not found, add sighting anyway?".<br/>
 2. Rename ALL of the functions and variables to english.<br/>
-3. Text fields overflow on mobile.
-4. UI-Framework
-5. Language changes?
-6. Paging-component in case of e.g. 1000 sightings
+3. UI-Framework <br/>
+4. Language changes? <br/>
+5. Paging-component in case of e.g. 1000 sightings
