@@ -2,7 +2,8 @@
 
 A node app with react frontend build. Frontend can be found in https://github.com/SamuliVen/lintupongari .
 Works with a database in MongoDB Atlas. Uses wiki API to get taxonomy data from birds saved as a sighting. 
-Only works in Finnish.
+Only works in Finnish. 
+Updated to handle errors with wrong input of species.
 
 http://lintupongari.herokuapp.com/
 
@@ -15,10 +16,7 @@ Open http://localhost:3001 to view it in the browser.
 
 <h3>Elements to develop:</h3>
 
-1. Error handler for wrong kind of species input.<br/>
-- At the moment the app only accepts Finnish birds that can be found in wikipedia.<br/>
-- "Species not found, add sighting anyway?".<br/>
-2. Rename ALL of the functions and variables to english.<br/>
-3. UI-Framework <br/>
-4. Language changes? <br/>
-5. Paging-component in case of e.g. 1000 sightings
+1. Rename ALL of the functions and variables to english.<br/>
+2. UI-Framework <br/>
+3. Language changes? <br/>
+4. Paging-component in case of e.g. 1000 sightings
