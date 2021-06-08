@@ -19,4 +19,5 @@ Open http://localhost:3001 to view it in the browser.
 1. Rename ALL of the functions and variables to english.<br/>
 2. UI-Framework <br/>
 3. Language changes? <br/>
-4. Paging-component in case of e.g. 1000 sightings
+4. Paging-component in case of e.g. 1000 sightings <br/> 
+5. Tiira.fi database copy?
